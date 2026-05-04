@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const footerLinks = [
-  { label: "Портфолио", href: "#" },
+  { label: "Портфолио", href: "/portfolio" },
   { label: "Тарифы", href: "#" },
   { label: "Контакты", href: "#" },
   { label: "Instagram", href: "#" },
@@ -33,20 +34,38 @@ export function FooterSection() {
             </motion.h2>
 
             <nav className="flex flex-wrap gap-6 mt-8">
-              {footerLinks.map((link, i) => (
-                <motion.a
-                  key={i}
-                  href={link.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  data-clickable
-                >
-                  {link.label}
-                </motion.a>
-              ))}
+              {footerLinks.map((link, i) =>
+                link.href.startsWith("/") ? (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Link
+                      to={link.href}
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      data-clickable
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                ) : (
+                  <motion.a
+                    key={i}
+                    href={link.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    data-clickable
+                  >
+                    {link.label}
+                  </motion.a>
+                )
+              )}
             </nav>
           </div>
 
