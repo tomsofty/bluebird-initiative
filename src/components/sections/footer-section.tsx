@@ -97,9 +97,9 @@ export function FooterSection() {
             <a href="#" className="text-muted-foreground hover:text-foreground text-sm" data-clickable>
               Конфиденциальность
             </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground text-sm" data-clickable>
+            <Link to="/terms" className="text-muted-foreground hover:text-foreground text-sm" data-clickable>
               Условия
-            </a>
+            </Link>
           </div>
         </div>
       </div>
