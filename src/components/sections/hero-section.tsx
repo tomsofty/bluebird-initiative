@@ -21,7 +21,7 @@ export function HeroSection() {
       {/* Image */}
       <div className="absolute top-24 right-6 md:right-12">
         <motion.div
-          className="relative w-[280px] md:w-[320px] aspect-square rounded-xl overflow-hidden shadow-2xl"
+          className="relative w-[280px] md:w-[320px] aspect-square rounded-xl overflow-hidden shadow-2xl border-4 border-background ring-1 ring-border"
           style={{ y, zIndex: 2 }}
           initial={{ clipPath: "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0 0 0 0)" }}
