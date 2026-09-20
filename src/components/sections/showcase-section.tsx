@@ -1,5 +1,7 @@
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { useCallback, useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import useEmblaCarousel from "embla-carousel-react"
+import Icon from "@/components/ui/icon"
 
 const showcaseImages = [
   "https://cdn.poehali.dev/projects/3270de15-aa3c-4cf9-9199-108610462a6b/files/d039d3ec-a352-44c2-bf07-bd0687b3cc00.jpg",
@@ -14,55 +16,98 @@ const showcaseImages = [
 ]
 
 export function ShowcaseSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  })
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" })
+  const [canScrollPrev, setCanScrollPrev] = useState(false)
+  const [canScrollNext, setCanScrollNext] = useState(false)
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100])
-  const y2 = useTransform(scrollYProgress, [0, 1], [150, -150])
-  const y3 = useTransform(scrollYProgress, [0, 1], [80, -80])
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
 
-  const yValues = [y1, y2, y3, y1, y2, y3, y1, y2, y3]
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    setCanScrollPrev(emblaApi.canScrollPrev())
+    setCanScrollNext(emblaApi.canScrollNext())
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    onSelect()
+    emblaApi.on("select", onSelect)
+    emblaApi.on("reInit", onSelect)
+  }, [emblaApi, onSelect])
 
   return (
-    <section ref={containerRef} className="bg-background px-6 py-32 overflow-hidden">
+    <section className="bg-background px-6 py-32 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <motion.p
-          className="text-muted-foreground text-sm uppercase tracking-widest mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          Галерея
-        </motion.p>
+        <div className="flex items-end justify-between mb-8">
+          <motion.p
+            className="text-muted-foreground text-sm uppercase tracking-widest"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Галерея
+          </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {showcaseImages.map((src, i) => (
-            <motion.div
-              key={i}
-              className="relative aspect-square rounded-xl overflow-hidden group"
-              style={{ y: yValues[i] }}
-              initial={{ clipPath: "inset(100% 0 0 0)" }}
-              whileInView={{ clipPath: "inset(0 0 0 0)" }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 1,
-                delay: i * 0.15,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+          <div className="hidden md:flex gap-3">
+            <button
+              onClick={scrollPrev}
+              disabled={!canScrollPrev}
+              className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-30"
+              aria-label="Предыдущее изображение"
               data-clickable
             >
-              <motion.img
-                src={src}
-                alt={`Изображение ${i + 1}`}
-                className="w-full h-full object-cover"
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              />
-            </motion.div>
-          ))}
+              <Icon name="ArrowLeft" size={18} />
+            </button>
+            <button
+              onClick={scrollNext}
+              disabled={!canScrollNext}
+              className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-30"
+              aria-label="Следующее изображение"
+              data-clickable
+            >
+              <Icon name="ArrowRight" size={18} />
+            </button>
+          </div>
+        </div>
+
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-6 md:gap-8">
+            {showcaseImages.map((src, i) => (
+              <div
+                key={i}
+                className="relative flex-[0_0_80%] sm:flex-[0_0_55%] md:flex-[0_0_31%] aspect-square rounded-xl overflow-hidden group"
+                data-clickable
+              >
+                <img
+                  src={src}
+                  alt={`Изображение ${i + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex md:hidden gap-3 mt-6 justify-center">
+          <button
+            onClick={scrollPrev}
+            disabled={!canScrollPrev}
+            className="w-10 h-10 rounded-full border border-border flex items-center justify-center disabled:opacity-30"
+            aria-label="Предыдущее изображение"
+            data-clickable
+          >
+            <Icon name="ArrowLeft" size={18} />
+          </button>
+          <button
+            onClick={scrollNext}
+            disabled={!canScrollNext}
+            className="w-10 h-10 rounded-full border border-border flex items-center justify-center disabled:opacity-30"
+            aria-label="Следующее изображение"
+            data-clickable
+          >
+            <Icon name="ArrowRight" size={18} />
+          </button>
         </div>
       </div>
     </section>
