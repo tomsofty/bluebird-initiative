@@ -1,11 +1,8 @@
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 
-const images = [
-  "https://cdn.poehali.dev/projects/3270de15-aa3c-4cf9-9199-108610462a6b/bucket/c9927a6f-71c7-48f6-bbdc-2d6c3cff7edd.jpg",
-  "https://cdn.poehali.dev/projects/3270de15-aa3c-4cf9-9199-108610462a6b/files/5eefa89e-3f93-4218-bbde-3198406a4d59.jpg",
-  "https://cdn.poehali.dev/projects/3270de15-aa3c-4cf9-9199-108610462a6b/files/35c00e50-fdde-48ce-bf50-d1505f8f805c.jpg",
-]
+const image =
+  "https://cdn.poehali.dev/projects/3270de15-aa3c-4cf9-9199-108610462a6b/bucket/c9927a6f-71c7-48f6-bbdc-2d6c3cff7edd.jpg"
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -14,11 +11,6 @@ export function HeroSection() {
     offset: ["start start", "end start"],
   })
 
-  const rotate1 = useTransform(scrollYProgress, [0, 1], [0, -15])
-  const rotate2 = useTransform(scrollYProgress, [0, 1], [0, 0])
-  const rotate3 = useTransform(scrollYProgress, [0, 1], [0, 15])
-  const x1 = useTransform(scrollYProgress, [0, 1], [0, -200])
-  const x3 = useTransform(scrollYProgress, [0, 1], [0, 200])
   const y = useTransform(scrollYProgress, [0, 1], [0, 100])
 
   return (
@@ -26,46 +18,18 @@ export function HeroSection() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background px-6 py-24"
     >
-      {/* Stacked images */}
+      {/* Image */}
       <div className="relative flex items-center justify-center">
         <motion.div
-          className="absolute w-[280px] md:w-[320px] aspect-square rounded-xl overflow-hidden shadow-2xl"
-          style={{ rotate: rotate1, x: x1, y, zIndex: 1 }}
+          className="relative w-[280px] md:w-[320px] aspect-square rounded-xl overflow-hidden shadow-2xl"
+          style={{ y, zIndex: 2 }}
           initial={{ clipPath: "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0 0 0 0)" }}
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <img
-            src={images[0] || "/placeholder.svg"}
-            alt="Портфолио 1"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-
-        <motion.div
-          className="relative w-[280px] md:w-[320px] aspect-[3/4] rounded-xl overflow-hidden shadow-2xl"
-          style={{ rotate: rotate2, y, zIndex: 2 }}
-          initial={{ clipPath: "inset(100% 0 0 0)" }}
-          animate={{ clipPath: "inset(0 0 0 0)" }}
-          transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <img
-            src={images[1] || "/placeholder.svg"}
-            alt="Портфолио 2"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-
-        <motion.div
-          className="absolute w-[280px] md:w-[320px] aspect-[3/4] rounded-xl overflow-hidden shadow-2xl"
-          style={{ rotate: rotate3, x: x3, y, zIndex: 1 }}
-          initial={{ clipPath: "inset(100% 0 0 0)" }}
-          animate={{ clipPath: "inset(0 0 0 0)" }}
-          transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <img
-            src={images[2] || "/placeholder.svg"}
-            alt="Портфолио 3"
+            src={image || "/placeholder.svg"}
+            alt="Портфолио"
             className="w-full h-full object-cover"
           />
         </motion.div>
