@@ -29,7 +29,7 @@ export function HeroSection() {
         >
           <img
             src={image || "/placeholder.svg"}
-            alt="Портфолио"
+            alt="Кот"
             className="w-full h-full object-cover"
           />
         </motion.div>
