@@ -41,7 +41,7 @@ export function PricingSection() {
           {plans.map((plan, i) => (
             <motion.div
               key={i}
-              className={`relative rounded-xl p-8 ticket-edge ${plan.popular ? "bg-background ring-2 ring-primary" : "bg-pink-50"}`}
+              className={`relative bg-background rounded-xl p-8 ticket-edge ${plan.popular ? "ring-2 ring-primary" : ""}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
