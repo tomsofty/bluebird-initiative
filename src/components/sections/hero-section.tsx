@@ -19,7 +19,7 @@ export function HeroSection() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background px-6 py-24"
     >
       {/* Image */}
-      <div className="relative flex items-center justify-center">
+      <div className="absolute top-24 right-6 md:right-12">
         <motion.div
           className="relative w-[280px] md:w-[320px] aspect-square rounded-xl overflow-hidden shadow-2xl"
           style={{ y, zIndex: 2 }}
