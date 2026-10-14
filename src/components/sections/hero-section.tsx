@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 
 const image =
-  "https://cdn.poehali.dev/projects/3270de15-aa3c-4cf9-9199-108610462a6b/bucket/c9927a6f-71c7-48f6-bbdc-2d6c3cff7edd.jpg"
+  "https://cdn.poehali.dev/projects/3270de15-aa3c-4cf9-9199-108610462a6b/bucket/0a595fd7-63e2-414e-ac92-bb515e3c75ed.jpg"
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -29,7 +29,7 @@ export function HeroSection() {
         >
           <img
             src={image || "/placeholder.svg"}
-            alt="Кот"
+            alt="Волна грома"
             className="w-full h-full object-cover"
           />
         </motion.div>
