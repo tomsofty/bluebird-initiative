@@ -1,40 +1,10 @@
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-
-const image =
-  "https://cdn.poehali.dev/projects/3270de15-aa3c-4cf9-9199-108610462a6b/bucket/0a595fd7-63e2-414e-ac92-bb515e3c75ed.jpg"
+import { motion } from "framer-motion"
 
 export function HeroSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 100])
-
   return (
     <section
-      ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background px-6 py-24"
     >
-      {/* Image */}
-      <div className="absolute top-24 right-6 md:right-12">
-        <motion.div
-          className="relative w-[280px] md:w-[320px] aspect-square rounded-xl overflow-hidden shadow-2xl border-4 border-background ring-1 ring-border"
-          style={{ y, zIndex: 2 }}
-          initial={{ clipPath: "inset(100% 0 0 0)" }}
-          animate={{ clipPath: "inset(0 0 0 0)" }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <img
-            src={image || "/placeholder.svg"}
-            alt="Волна грома"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-      </div>
-
       <motion.div
         className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
         initial={{ opacity: 0, y: 30 }}
