@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "@/lib/router-compat"
 import Icon from "@/components/ui/icon"
 
 const sections = [
